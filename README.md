@@ -53,6 +53,18 @@ Ejemplo:
 GET ciudad
 ```
 
+TTL
+
+```
+TTL <key>
+```
+
+Ejemplo:
+
+```
+TTL ciudad
+```
+
 DEL
 
 ```
@@ -83,6 +95,10 @@ OK
 
 GET ciudad
 Alicante
+
+-- Después de 2 segundos:
+TTL ciudad
+8
 
 -- Después de 10 segundos:
 GET ciudad
