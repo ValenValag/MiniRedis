@@ -50,8 +50,9 @@ public class Main {
     private static String processCommand(String input) {
         String[] parts = input.split(" ");
         String command = parts[0].toUpperCase();
+        String key = parts[1];
 
-        if (parts[1] == null) {
+        if (key == null) {
             return "ERROR: no key specified!";
         }
 
@@ -68,31 +69,31 @@ public class Main {
                 long expiresAt = System.currentTimeMillis() + ttlSeconds * 1000;
                 ValueEntry entry = new ValueEntry(parts[2], expiresAt);
 
-                store.put(parts[1], entry);
+                store.put(key, entry);
                 return "OK";
             }
             case "GET" -> {
-                ValueEntry entry = store.get(parts[1]);
+                ValueEntry entry = store.get(key);
 
                 if (entry == null) {
                     return "NULL";
                 }
 
                 if (System.currentTimeMillis() > entry.expiresAt) {
-                    store.remove(parts[1]);
+                    store.remove(key);
                     return "NULL";
                 }
 
                 return entry.value;
             }
             case "DEL" -> {
-                ValueEntry entry = store.get(parts[1]);
+                ValueEntry entry = store.get(key);
 
                 if (entry == null) {
                     return "ERROR: Entry does not exist!";
                 }
 
-                store.remove(parts[1]);
+                store.remove(key);
                 return "OK";
 
             }
